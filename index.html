@@ -2,49 +2,77 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <!-- Meta tag essencial para garantir que o site seja responsivo em celulares e tablets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACAJ SLU</title>
     <style>
         body {
             background-color: #f4f4f6; /* Cor de fundo cinza bem claro */
             font-family: 'Cambria', Georgia, serif; /* Fonte Cambria */
             color: #333333; /* Cor do texto principal */
-            margin: 40px; /* Margem interna da página */
-            line-height: 1.6; /* Espaçamento entre linhas */
-        } 
+            margin: 0;
+            padding: 20px; /* Espaçamento de segurança nas bordas em telas pequenas */
+            box-sizing: border-box;
+        }
 
-        /* Estilo do container que alinha o logo e o título */
-        .header-container {
+        /* Área superior reservada apenas para o logotipo no canto esquerdo */
+        .top-bar {
+            width: 100%;
             display: flex;
-            align-items: center;
-            gap: 20px; /* Espaço entre o logotipo e o título */
+            justify-content: flex-start; /* Alinha o logotipo à esquerda */
             margin-bottom: 20px;
         }
 
-        /* Estilo do logotipo */
         .logo {
-            width: 80px; /* Ajuste a largura do logotipo conforme necessário */
+            width: 80px; /* Largura padrão do logotipo */
             height: auto;
+        }
+
+        /* Bloco principal centralizado que organiza o conteúdo do site */
+        .main-content {
+            max-width: 800px; /* Limita a largura em telas grandes para manter uma boa leitura */
+            margin: 0 auto;   /* Centraliza o bloco na tela na horizontal */
+            text-align: center; /* Centraliza todo o texto interno */
+            padding: 20px 10px;
         }
 
         h1 {
             color: #111111;
-            margin: 0;
+            font-size: clamp(24px, 4vw, 36px); /* Tamanho de fonte fluido: ajusta entre celular e PC */
+            margin-bottom: 24px;
         }
 
         p {
-            font-size: 22px; /* Define o tamanho da fonte do parágrafo em 22px */
+            font-size: clamp(16px, 2.5vw, 22px); /* Tamanho fluido: confortável no celular e no PC */
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Ajustes específicos para telas muito pequenas (smartphones) */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 60px; /* Reduz levemente o logo em telas de celulares */
+            }
         }
     </style>
 </head>
 <body>
 
-    <header class="header-container">
-        <!-- Substitua 'logo.png' pelo caminho/URL relativo da imagem no seu repositório do GitHub -->
+    <!-- Topo da página com o logotipo à esquerda -->
+    <header class="top-bar">
+        <!-- Substitua 'logo.png' pelo nome/caminho correto do seu arquivo no GitHub -->
         <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
-        <h1>ACAJ - Sociedade Limitada Unipessoal</h1>
     </header>
 
-    <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
+    <!-- Conteúdo principal do site centralizado -->
+    <main class="main-content">
+        <h1>ACAJ - Sociedade Limitada Unipessoal</h1>
+        <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
+    </main>
 
 </body>
 </html>
