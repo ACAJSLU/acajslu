@@ -15,31 +15,35 @@
             box-sizing: border-box;
         }
 
-        /* Área superior reservada apenas para o logotipo no canto esquerdo */
+        /* Área superior com logotipo e título marca alinhados lado a lado à esquerda */
         .top-bar {
             width: 100%;
             display: flex;
-            justify-content: flex-start; /* Alinha o logotipo à esquerda */
-            margin-bottom: 20px;
+            align-items: center; /* Alinha o texto na altura do meio do logotipo */
+            gap: 16px; /* Espaçamento entre o logotipo e o título marca */
+            margin-bottom: 40px;
         }
 
         .logo {
             width: 80px; /* Largura padrão do logotipo */
             height: auto;
+            flex-shrink: 0; /* Impede a imagem de encolher em telas menores */
         }
 
-        /* Bloco principal centralizado que organiza o conteúdo do site */
+        /* Título da marca posicionado ao lado do logotipo */
+        .brand-title {
+            color: #111111;
+            font-size: clamp(20px, 3.5vw, 28px); /* Ajuste de fonte responsivo */
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        /* Bloco principal centralizado para a mensagem institucional */
         .main-content {
             max-width: 800px; /* Limita a largura em telas grandes para manter uma boa leitura */
             margin: 0 auto;   /* Centraliza o bloco na tela na horizontal */
-            text-align: center; /* Centraliza todo o texto interno */
+            text-align: center; /* Centraliza o parágrafo descritivo */
             padding: 20px 10px;
-        }
-
-        h1 {
-            color: #111111;
-            font-size: clamp(24px, 4vw, 36px); /* Tamanho de fonte fluido: ajusta entre celular e PC */
-            margin-bottom: 24px;
         }
 
         p {
@@ -48,29 +52,33 @@
             margin: 0;
         }
 
-        /* Ajustes específicos para telas muito pequenas (smartphones) */
+        /* Ajustes específicos para telas de smartphones */
         @media (max-width: 600px) {
             body {
                 padding: 15px;
             }
 
+            .top-bar {
+                gap: 12px;
+                margin-bottom: 25px;
+            }
+
             .logo {
-                width: 60px; /* Reduz levemente o logo em telas de celulares */
+                width: 55px; /* Reduz levemente o logo em telas de celulares */
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Topo da página com o logotipo à esquerda -->
+    <!-- Cabeçalho com o logotipo e o título da marca alinhados à esquerda -->
     <header class="top-bar">
-        <!-- Substitua 'logo.png' pelo nome/caminho correto do seu arquivo no GitHub -->
         <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
+        <h1 class="brand-title">ACAJ - Sociedade Limitada Unipessoal</h1>
     </header>
 
-    <!-- Conteúdo principal do site centralizado -->
+    <!-- Conteúdo principal centralizado -->
     <main class="main-content">
-        <h1>ACAJ - Sociedade Limitada Unipessoal</h1>
         <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
     </main>
 
