@@ -11,16 +11,40 @@
             margin: 40px; /* Margem interna da página */
             line-height: 1.6; /* Espaçamento entre linhas */
         } 
+
+        /* Estilo do container que alinha o logo e o título */
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Espaço entre o logotipo e o título */
+            margin-bottom: 20px;
+        }
+
+        /* Estilo do logotipo */
+        .logo {
+            width: 80px; /* Ajuste a largura do logotipo conforme necessário */
+            height: auto;
+        }
+
         h1 {
             color: #111111;
+            margin: 0;
         }
+
         p {
             font-size: 22px; /* Define o tamanho da fonte do parágrafo em 22px */
         }
     </style>
 </head>
 <body>
-    <h1>ACAJ - Sociedade Limitada Unipessoal</h1>
+
+    <header class="header-container">
+        <!-- Substitua 'logo.png' pelo caminho/URL relativo da imagem no seu repositório do GitHub -->
+        <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
+        <h1>ACAJ - Sociedade Limitada Unipessoal</h1>
+    </header>
+
     <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
+
 </body>
 </html>
