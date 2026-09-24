@@ -15,48 +15,64 @@
             box-sizing: border-box;
         }
 
-        /* Faixa de cor no topo que vai de ponta a ponta da tela */
+        /* Faixa de cor principal no topo */
         .top-bar {
             width: 100%;
-            background-color: #1e293b; /* Cor da faixa: Azul-marinho escuro/corporativo */
-            padding: 15px 30px; /* Espaço interno para respirar */
+            background-color: #1e293b; /* Azul-marinho escuro */
+            padding: 15px 30px;
             display: flex;
-            align-items: center; /* Alinha verticalmente o logo e o texto ao centro */
-            gap: 20px; /* Espaçamento entre o logotipo e o título */
+            align-items: center;
+            gap: 20px;
             box-sizing: border-box;
-            border-bottom: 3px solid #d4af37; /* Linha sutil dourada na base para dar acabamento */
+            border-bottom: 3px solid #d4af37; /* Linha dourada separadora */
         }
 
         .logo {
-            width: 60px; /* Largura proporcional para o logo dentro da faixa */
+            width: 60px;
             height: auto;
-            flex-shrink: 0; /* Impede que a imagem encolha em telas muito pequenas */
+            flex-shrink: 0;
         }
 
         /* Título da marca dentro da faixa escura */
         .brand-title {
-            color: #ffffff; /* Letra branca para alto contraste */
-            font-size: clamp(18px, 3vw, 26px); /* Ajuste de tamanho dinâmico */
+            color: #ffffff;
+            font-size: clamp(18px, 3vw, 26px);
             font-weight: normal;
             margin: 0;
             line-height: 1.2;
         }
 
-        /* Destaque em dourado para a segunda parte do título */
         .brand-title span {
-            color: #f1c40f; /* Cor dourada para harmonizar com o logotipo */
+            color: #f1c40f;
+        }
+
+        /* Segunda faixa: Reservada para o futuro menu de navegação */
+        .nav-bar {
+            width: 100%;
+            background-color: #334155; /* Tom complementar para o menu */
+            padding: 12px 30px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .menu-placeholder {
+            color: #e2e8f0;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
         }
 
         /* Bloco principal centralizado para a mensagem institucional */
         .main-content {
-            max-width: 800px; /* Limita a largura para melhor leitura em PCs */
-            margin: 60px auto;   /* Centraliza horizontalmente e dá espaço da faixa */
-            text-align: center; /* Centraliza o parágrafo */
-            padding: 0 20px; /* Margem de segurança nas laterais */
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 0 20px;
         }
 
         p {
-            font-size: clamp(18px, 2.8vw, 22px); /* Confortável em celulares e computadores */
+            font-size: clamp(18px, 2.8vw, 22px);
             line-height: 1.6;
             margin: 0;
         }
@@ -64,32 +80,40 @@
         /* Ajustes de responsividade para celulares */
         @media (max-width: 600px) {
             .top-bar {
-                padding: 10px 15px; /* Reduz margens no mobile */
+                padding: 10px 15px;
                 gap: 12px;
             }
 
             .logo {
-                width: 45px; /* Reduz logo para não esmagar em telas pequenas */
+                width: 45px;
+            }
+
+            .nav-bar {
+                padding: 10px 15px;
             }
 
             .main-content {
-                margin: 40px auto; /* Reduz espaçamento do topo em telas pequenas */
+                margin: 35px auto;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Faixa de cabeçalho escura com o logotipo e o título da marca -->
+    <!-- Faixa de cabeçalho com o logotipo e título -->
     <header class="top-bar">
         <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
         <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
     </header>
 
+    <!-- Segunda faixa reservada para os menus futuros -->
+    <nav class="nav-bar">
+        <p class="menu-placeholder">Área reservada para o menu</p>
+    </nav>
+
     <!-- Conteúdo principal centralizado -->
     <main class="main-content">
-        <h1>Apresentação</h1>
-        <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado, onde todas as ciências desenvolvidas pelo conhecimento humano, se transformou em uma única Ciência tecnologizada, em que sua sabedoria plena agora molda e dita sobre a evolução de todas as coisas existentes.</p>
+        <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
     </main>
 
 </body>
