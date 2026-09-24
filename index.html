@@ -2,29 +2,30 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag essencial para garantir que o site seja responsivo em celulares e tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACAJ SLU</title>
     <style>
         body {
-            background-color: #f4f4f6; /* Cor de fundo cinza bem claro */
-            font-family: 'Cambria', Georgia, serif; /* Fonte Cambria */
-            color: #333333; /* Cor do texto principal */
+            background-color: #f4f4f6;
+            font-family: 'Cambria', Georgia, serif;
+            color: #333333;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Faixa de cor principal no topo */
         .top-bar {
             width: 100%;
-            background-color: #1e293b; /* Azul-marinho escuro */
+            background-color: #1e293b;
             padding: 15px 30px;
             display: flex;
             align-items: center;
             gap: 20px;
             box-sizing: border-box;
-            border-bottom: 3px solid #d4af37; /* Linha dourada separadora */
+            border-bottom: 3px solid #d4af37;
         }
 
         .logo {
@@ -33,7 +34,6 @@
             flex-shrink: 0;
         }
 
-        /* Título da marca dentro da faixa escura */
         .brand-title {
             color: #ffffff;
             font-size: clamp(18px, 3vw, 26px);
@@ -46,10 +46,9 @@
             color: #f1c40f;
         }
 
-        /* Segunda faixa: Reservada para o futuro menu de navegação */
         .nav-bar {
             width: 100%;
-            background-color: #334155; /* Tom complementar para o menu */
+            background-color: #334155;
             padding: 12px 30px;
             box-sizing: border-box;
             border-bottom: 1px solid #cbd5e1;
@@ -63,58 +62,238 @@
             margin: 0;
         }
 
-        /* Bloco principal centralizado para a mensagem institucional */
-        .main-content {
-            max-width: 800px;
-            margin: 50px auto;
-            text-align: center;
+        .page-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 220px;
+            gap: 20px;
+            max-width: 1300px;
+            width: 100%;
+            margin: 30px auto;
             padding: 0 20px;
+            box-sizing: border-box;
+            flex: 1;
         }
 
-        p {
-            font-size: clamp(18px, 2.8vw, 22px);
-            line-height: 1.6;
+        .sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .sidebar h2 {
+            font-size: 17px;
+            color: #1e293b;
+            margin-top: 0;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilização da Lista de Notícias */
+        .noticias-lista {
+            list-style: none;
+            padding: 0;
             margin: 0;
         }
 
-        /* Ajustes de responsividade para celulares */
-        @media (max-width: 600px) {
-            .top-bar {
+        .noticias-lista li {
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .noticias-lista a {
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .noticias-lista a:hover {
+            color: #d4af37;
+        }
+
+        .noticia-data {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .main-content {
+            background-color: #ffffff;
+            padding: 35px 30px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .main-content h2.section-title {
+            font-size: 24px;
+            color: #1e293b;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .main-content p {
+            font-size: clamp(18px, 2.2vw, 21px);
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
+        }
+
+        .footer-bar {
+            width: 100%;
+            background-color: #1e293b;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: auto;
+            border-top: 3px solid #d4af37;
+            font-size: 14px;
+        }
+
+        .footer-bar p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar, .nav-bar {
                 padding: 10px 15px;
-                gap: 12px;
             }
 
             .logo {
                 width: 45px;
-            }
-
-            .nav-bar {
-                padding: 10px 15px;
-            }
-
-            .main-content {
-                margin: 35px auto;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Faixa de cabeçalho com o logotipo e título -->
     <header class="top-bar">
         <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
         <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
     </header>
 
-    <!-- Segunda faixa reservada para os menus futuros -->
     <nav class="nav-bar">
-        <p class="menu-placeholder">Área reservada para o menu</p>
+        <p class="menu-placeholder">Área reservada ao menu</p>
     </nav>
 
-    <!-- Conteúdo principal centralizado -->
-    <main class="main-content">
-        <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
-    </main>
+    <div class="page-container">
+
+        <aside class="sidebar left-sidebar">
+            
+            <h2>Índices Financeiros</h2>
+            <div class="tradingview-widget-container" style="margin-bottom: 25px;">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                  "colorTheme": "light",
+                  "dateRange": "1D",
+                  "showChart": false,
+                  "locale": "br",
+                  "width": "100%",
+                  "height": "220",
+                  "largeChartUrl": "",
+                  "isTransparent": true,
+                  "showSymbolLogo": true,
+                  "tabs": [
+                    {
+                      "title": "Mercado",
+                      "symbols": [
+                        { "s": "FX_IDC:USDBRL", "d": "Dólar (USD/BRL)" },
+                        { "s": "FX_IDC:EURBRL", "d": "Euro (EUR/BRL)" },
+                        { "s": "BMFBOVESPA:IBOV", "d": "Ibovespa" },
+                        { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" }
+                      ]
+                    }
+                  ]
+                }
+                </script>
+            </div>
+
+            <h2>Últimas Notícias (Brasil)</h2>
+            <ul id="lista-noticias" class="noticias-lista">
+                <li>A carregar notícias...</li>
+            </ul>
+
+        </aside>
+
+        <main class="main-content">
+            <h2 class="section-title">Apresentação</h2>
+            <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
+        </main>
+
+        <aside class="sidebar right-sidebar">
+            <h2>Produtos Recomendados</h2>
+            <p style="font-size: 14px; color: #666;">Em breve: Banners e links de afiliados Shopee.</p>
+        </aside>
+
+    </div>
+
+    <footer class="footer-bar">
+        <p>&copy; ACAJ - Sociedade Limitada Unipessoal. Todos os direitos reservados.</p>
+        <p>Contato: contato@acaj.com.br</p>
+    </footer>
+
+    <!-- Script JavaScript para carregar o Google Notícias automaticamente -->
+    <script>
+        async function carregarGoogleNoticias() {
+            const feedUrl = encodeURIComponent('https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419');
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${feedUrl}`;
+
+            try {
+                const resposta = await fetch(apiUrl);
+                const dados = await resposta.json();
+
+                if (dados.status === 'ok') {
+                    const ul = document.getElementById('lista-noticias');
+                    ul.innerHTML = ''; // Limpa a mensagem de carregamento
+
+                    // Exibe as 5 primeiras notícias do feed
+                    dados.items.slice(0, 5).forEach(item => {
+                        const li = document.createElement('li');
+                        
+                        const link = document.createElement('a');
+                        link.href = item.link;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        link.textContent = item.title;
+
+                        const data = document.createElement('span');
+                        data.className = 'noticia-data';
+                        data.textContent = new Date(item.pubDate).toLocaleDateString('pt-BR', {
+                            day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                        });
+
+                        li.appendChild(link);
+                        li.appendChild(data);
+                        ul.appendChild(li);
+                    });
+                } else {
+                    document.getElementById('lista-noticias').innerHTML = '<li>Não foi possível carregar as notícias.</li>';
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar notícias:", erro);
+                document.getElementById('lista-noticias').innerHTML = '<li>Erro ao carregar notícias.</li>';
+            }
+        }
+
+        carregarGoogleNoticias();
+    </script>
 
 </body>
 </html>
