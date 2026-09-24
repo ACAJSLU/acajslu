@@ -11,70 +11,79 @@
             font-family: 'Cambria', Georgia, serif; /* Fonte Cambria */
             color: #333333; /* Cor do texto principal */
             margin: 0;
-            padding: 20px; /* Espaçamento de segurança nas bordas em telas pequenas */
+            padding: 0;
             box-sizing: border-box;
         }
 
-        /* Área superior com logotipo e título marca alinhados lado a lado à esquerda */
+        /* Faixa de cor no topo que vai de ponta a ponta da tela */
         .top-bar {
             width: 100%;
+            background-color: #1e293b; /* Cor da faixa: Azul-marinho escuro/corporativo */
+            padding: 15px 30px; /* Espaço interno para respirar */
             display: flex;
-            align-items: center; /* Alinha o texto na altura do meio do logotipo */
-            gap: 16px; /* Espaçamento entre o logotipo e o título marca */
-            margin-bottom: 40px;
+            align-items: center; /* Alinha verticalmente o logo e o texto ao centro */
+            gap: 20px; /* Espaçamento entre o logotipo e o título */
+            box-sizing: border-box;
+            border-bottom: 3px solid #d4af37; /* Linha sutil dourada na base para dar acabamento */
         }
 
         .logo {
-            width: 80px; /* Largura padrão do logotipo */
+            width: 60px; /* Largura proporcional para o logo dentro da faixa */
             height: auto;
-            flex-shrink: 0; /* Impede a imagem de encolher em telas menores */
+            flex-shrink: 0; /* Impede que a imagem encolha em telas muito pequenas */
         }
 
-        /* Título da marca posicionado ao lado do logotipo */
+        /* Título da marca dentro da faixa escura */
         .brand-title {
-            color: #111111;
-            font-size: clamp(20px, 3.5vw, 28px); /* Ajuste de fonte responsivo */
+            color: #ffffff; /* Letra branca para alto contraste */
+            font-size: clamp(18px, 3vw, 26px); /* Ajuste de tamanho dinâmico */
+            font-weight: normal;
             margin: 0;
             line-height: 1.2;
         }
 
+        /* Destaque em dourado para a segunda parte do título */
+        .brand-title span {
+            color: #f1c40f; /* Cor dourada para harmonizar com o logotipo */
+        }
+
         /* Bloco principal centralizado para a mensagem institucional */
         .main-content {
-            max-width: 800px; /* Limita a largura em telas grandes para manter uma boa leitura */
-            margin: 0 auto;   /* Centraliza o bloco na tela na horizontal */
-            text-align: center; /* Centraliza o parágrafo descritivo */
-            padding: 20px 10px;
+            max-width: 800px; /* Limita a largura para melhor leitura em PCs */
+            margin: 60px auto;   /* Centraliza horizontalmente e dá espaço da faixa */
+            text-align: center; /* Centraliza o parágrafo */
+            padding: 0 20px; /* Margem de segurança nas laterais */
         }
 
         p {
-            font-size: clamp(16px, 2.5vw, 22px); /* Tamanho fluido: confortável no celular e no PC */
+            font-size: clamp(18px, 2.8vw, 22px); /* Confortável em celulares e computadores */
             line-height: 1.6;
             margin: 0;
         }
 
-        /* Ajustes específicos para telas de smartphones */
+        /* Ajustes de responsividade para celulares */
         @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-
             .top-bar {
+                padding: 10px 15px; /* Reduz margens no mobile */
                 gap: 12px;
-                margin-bottom: 25px;
             }
 
             .logo {
-                width: 55px; /* Reduz levemente o logo em telas de celulares */
+                width: 45px; /* Reduz logo para não esmagar em telas pequenas */
+            }
+
+            .main-content {
+                margin: 40px auto; /* Reduz espaçamento do topo em telas pequenas */
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cabeçalho com o logotipo e o título da marca alinhados à esquerda -->
+    <!-- Faixa de cabeçalho escura com o logotipo e o título da marca -->
     <header class="top-bar">
         <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
-        <h1 class="brand-title">ACAJ - Sociedade Limitada Unipessoal</h1>
+        <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
     </header>
 
     <!-- Conteúdo principal centralizado -->
