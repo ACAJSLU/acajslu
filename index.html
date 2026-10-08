@@ -272,26 +272,26 @@
         <p>Contato: contato@acaj.com.br</p>
     </footer>
 
-    <!-- Script JavaScript atualizado para carregar as notícias com AllOrigins -->
+    <!-- Script JavaScript para carregar as notícias via Proxy CORS direto -->
     <script>
         async function carregarGoogleNoticias() {
             const rssUrl = 'https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419';
-            const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+            // Utilização do proxy corsproxy.io para obter a resposta XML bruta sem bloqueios de CORS
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
 
             try {
-                const resposta = await fetch(apiUrl);
-                if (!resposta.ok) throw new Error('Falha na requisição');
+                const resposta = await fetch(proxyUrl);
+                if (!resposta.ok) throw new Error('Falha ao obter os dados do feed');
 
-                const dados = await resposta.json();
-                
+                const textoXml = await resposta.text();
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(dados.contents, "text/xml");
+                const xmlDoc = parser.parseFromString(textoXml, "text/xml");
                 const itens = xmlDoc.querySelectorAll("item");
 
                 const ul = document.getElementById('lista-noticias');
                 ul.innerHTML = '';
 
-                if (itens.length === 0) {
+                if (!itens || itens.length === 0) {
                     ul.innerHTML = '<li>Nenhuma notícia disponível no momento.</li>';
                     return;
                 }
@@ -300,24 +300,29 @@
                     const li = document.createElement('li');
                     
                     const link = document.createElement('a');
-                    link.href = item.querySelector("link") ? item.querySelector("link").textContent : '#';
+                    const linkElem = item.querySelector("link");
+                    link.href = linkElem ? linkElem.textContent : '#';
                     link.target = '_blank';
                     link.rel = 'noopener noreferrer';
-                    link.textContent = item.querySelector("title") ? item.querySelector("title").textContent : 'Notícia sem título';
+                    
+                    const titleElem = item.querySelector("title");
+                    link.textContent = titleElem ? titleElem.textContent : 'Notícia sem título';
 
-                    const pubDateText = item.querySelector("pubDate") ? item.querySelector("pubDate").textContent : null;
+                    const pubDateElem = item.querySelector("pubDate");
                     const data = document.createElement('span');
                     data.className = 'noticia-data';
                     
-                    if (pubDateText) {
-                        const dataObj = new Date(pubDateText);
-                        data.textContent = dataObj.toLocaleDateString('pt-BR', {
-                            day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                        });
+                    if (pubDateElem && pubDateElem.textContent) {
+                        const dataObj = new Date(pubDateElem.textContent);
+                        if (!isNaN(dataObj)) {
+                            data.textContent = dataObj.toLocaleDateString('pt-BR', {
+                                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                            });
+                        }
                     }
 
                     li.appendChild(link);
-                    li.appendChild(data);
+                    if (data.textContent) li.appendChild(data);
                     ul.appendChild(li);
                 });
 
