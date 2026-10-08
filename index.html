@@ -91,7 +91,6 @@
             margin-bottom: 15px;
         }
 
-        /* Estilização da Lista de Notícias */
         .noticias-lista {
             list-style: none;
             padding: 0;
@@ -272,67 +271,53 @@
         <p>Contato: contato@acaj.com.br</p>
     </footer>
 
-    <!-- Script JavaScript para carregar as notícias via Proxy CORS direto -->
     <script>
-        async function carregarGoogleNoticias() {
-            const rssUrl = 'https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419';
-            // Utilização do proxy corsproxy.io para obter a resposta XML bruta sem bloqueios de CORS
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
+        async function carregarNoticias() {
+            // URL do feed RSS via rss2json com parâmetros otimizados
+            const rssFeed = encodeURIComponent('https://g1.globo.com/rss/g1/brasil/');
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssFeed}`;
 
             try {
-                const resposta = await fetch(proxyUrl);
-                if (!resposta.ok) throw new Error('Falha ao obter os dados do feed');
-
-                const textoXml = await resposta.text();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(textoXml, "text/xml");
-                const itens = xmlDoc.querySelectorAll("item");
+                const resposta = await fetch(apiUrl);
+                const dados = await resposta.json();
 
                 const ul = document.getElementById('lista-noticias');
                 ul.innerHTML = '';
 
-                if (!itens || itens.length === 0) {
-                    ul.innerHTML = '<li>Nenhuma notícia disponível no momento.</li>';
-                    return;
-                }
+                if (dados.status === 'ok' && dados.items && dados.items.length > 0) {
+                    dados.items.slice(0, 5).forEach(item => {
+                        const li = document.createElement('li');
+                        
+                        const link = document.createElement('a');
+                        link.href = item.link;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        link.textContent = item.title;
 
-                Array.from(itens).slice(0, 5).forEach(item => {
-                    const li = document.createElement('li');
-                    
-                    const link = document.createElement('a');
-                    const linkElem = item.querySelector("link");
-                    link.href = linkElem ? linkElem.textContent : '#';
-                    link.target = '_blank';
-                    link.rel = 'noopener noreferrer';
-                    
-                    const titleElem = item.querySelector("title");
-                    link.textContent = titleElem ? titleElem.textContent : 'Notícia sem título';
-
-                    const pubDateElem = item.querySelector("pubDate");
-                    const data = document.createElement('span');
-                    data.className = 'noticia-data';
-                    
-                    if (pubDateElem && pubDateElem.textContent) {
-                        const dataObj = new Date(pubDateElem.textContent);
-                        if (!isNaN(dataObj)) {
+                        const data = document.createElement('span');
+                        data.className = 'noticia-data';
+                        
+                        if (item.pubDate) {
+                            const dataObj = new Date(item.pubDate);
                             data.textContent = dataObj.toLocaleDateString('pt-BR', {
                                 day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                             });
                         }
-                    }
 
-                    li.appendChild(link);
-                    if (data.textContent) li.appendChild(data);
-                    ul.appendChild(li);
-                });
-
+                        li.appendChild(link);
+                        li.appendChild(data);
+                        ul.appendChild(li);
+                    });
+                } else {
+                    ul.innerHTML = '<li>Nenhuma notícia disponível.</li>';
+                }
             } catch (erro) {
                 console.error("Erro ao carregar notícias:", erro);
                 document.getElementById('lista-noticias').innerHTML = '<li>Erro ao carregar notícias.</li>';
             }
         }
 
-        carregarGoogleNoticias();
+        carregarNoticias();
     </script>
 
 </body>
