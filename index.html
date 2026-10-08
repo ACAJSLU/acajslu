@@ -91,7 +91,6 @@
             margin-bottom: 15px;
         }
 
-        /* Estilização da Lista de Notícias */
         .noticias-lista {
             list-style: none;
             padding: 0;
@@ -248,8 +247,13 @@
                 </script>
             </div>
 
-            <h2>Últimas Notícias (G1 Brasil)</h2>
-            <ul id="lista-noticias" class="noticias-lista">
+            <h2>Notícias de São Paulo</h2>
+            <ul id="lista-sp" class="noticias-lista" style="margin-bottom: 25px;">
+                <li>A carregar notícias...</li>
+            </ul>
+
+            <h2>Notícias do Mundo</h2>
+            <ul id="lista-mundo" class="noticias-lista">
                 <li>A carregar notícias...</li>
             </ul>
 
@@ -272,22 +276,17 @@
         <p>Contato: contato@acaj.com.br</p>
     </footer>
 
-    <!-- Script JavaScript para carregar as notícias diretamente do G1 via RSS2JSON -->
     <script>
-        async function carregarG1Noticias() {
-            const feedUrl = encodeURIComponent('https://g1.globo.com/rss/g1/brasil/');
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${feedUrl}`;
-
+        async function buscarFeedG1(urlFeed, elementId, limite = 4) {
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(urlFeed)}`;
             try {
                 const resposta = await fetch(apiUrl);
                 const dados = await resposta.json();
+                const ul = document.getElementById(elementId);
+                ul.innerHTML = '';
 
                 if (dados.status === 'ok' && dados.items && dados.items.length > 0) {
-                    const ul = document.getElementById('lista-noticias');
-                    ul.innerHTML = ''; // Limpa a mensagem de carregamento
-
-                    // Exibe as 5 primeiras notícias do feed do G1
-                    dados.items.slice(0, 5).forEach(item => {
+                    dados.items.slice(0, limite).forEach(item => {
                         const li = document.createElement('li');
                         
                         const link = document.createElement('a');
@@ -310,15 +309,21 @@
                         ul.appendChild(li);
                     });
                 } else {
-                    document.getElementById('lista-noticias').innerHTML = '<li>Não foi possível carregar as notícias do G1.</li>';
+                    ul.innerHTML = '<li>Nenhuma notícia disponível.</li>';
                 }
             } catch (erro) {
-                console.error("Erro ao carregar notícias do G1:", erro);
-                document.getElementById('lista-noticias').innerHTML = '<li>Erro ao carregar notícias.</li>';
+                console.error("Erro ao carregar feed:", erro);
+                document.getElementById(elementId).innerHTML = '<li>Erro ao carregar notícias.</li>';
             }
         }
 
-        carregarG1Noticias();
+        // URLs dos feeds RSS do G1
+        const feedSP = 'https://g1.globo.com/rss/g1/sao-paulo/';
+        const feedMundo = 'https://g1.globo.com/rss/g1/mundo/';
+
+        // Carrega 3 notícias de cada categoria
+        buscarFeedG1(feedSP, 'lista-sp', 3);
+        buscarFeedG1(feedMundo, 'lista-mundo', 3);
     </script>
 
 </body>
