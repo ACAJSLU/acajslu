@@ -1,322 +1,60 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACAJ SLU</title>
-    <style>
-        body {
-            background-color: #f4f4f6;
-            font-family: 'Cambria', Georgia, serif;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+<script>
+    async function carregarGoogleNoticias() {
+        // Feed em RSS do Google Notícias
+        const rssUrl = 'https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419';
+        // Utilizando o proxy AllOrigins para contornar problemas de CORS
+        const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
-        .top-bar {
-            width: 100%;
-            background-color: #1e293b;
-            padding: 15px 30px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-sizing: border-box;
-            border-bottom: 3px solid #d4af37;
-        }
-
-        .logo {
-            width: 60px;
-            height: auto;
-            flex-shrink: 0;
-        }
-
-        .brand-title {
-            color: #ffffff;
-            font-size: clamp(18px, 3vw, 26px);
-            font-weight: normal;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .brand-title span {
-            color: #f1c40f;
-        }
-
-        .nav-bar {
-            width: 100%;
-            background-color: #334155;
-            padding: 12px 30px;
-            box-sizing: border-box;
-            border-bottom: 1px solid #cbd5e1;
-        }
-
-        .menu-placeholder {
-            color: #e2e8f0;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .page-container {
-            display: grid;
-            grid-template-columns: 280px 1fr 220px;
-            gap: 20px;
-            max-width: 1300px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-            flex: 1;
-        }
-
-        .sidebar {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .sidebar h2 {
-            font-size: 17px;
-            color: #1e293b;
-            margin-top: 0;
-            border-bottom: 2px solid #d4af37;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        /* Estilização da Lista de Notícias */
-        .noticias-lista {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .noticias-lista li {
-            margin-bottom: 12px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-
-        .noticias-lista a {
-            color: #1e293b;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 3px;
-            transition: color 0.2s ease;
-        }
-
-        .noticias-lista a:hover {
-            color: #d4af37;
-        }
-
-        .noticia-data {
-            font-size: 11px;
-            color: #64748b;
-        }
-
-        .main-content {
-            background-color: #ffffff;
-            padding: 35px 30px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .main-content h2.section-title {
-            font-size: 24px;
-            color: #1e293b;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-        }
-
-        .main-content p {
-            font-size: clamp(18px, 2.2vw, 21px);
-            line-height: 1.6;
-            margin: 0;
-            text-align: center;
-        }
-
-        .footer-bar {
-            width: 100%;
-            background-color: #1e293b;
-            color: #cbd5e1;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            margin-top: auto;
-            border-top: 3px solid #d4af37;
-            font-size: 14px;
-        }
-
-        .footer-bar p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        @media (max-width: 900px) {
-            .page-container {
-                grid-template-columns: 1fr;
-            }
-
-            .top-bar, .nav-bar {
-                padding: 10px 15px;
-            }
-
-            .logo {
-                width: 45px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="top-bar">
-        <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
-        <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
-    </header>
-
-    <nav class="nav-bar">
-        <p class="menu-placeholder">Área reservada ao menu</p>
-    </nav>
-
-    <div class="page-container">
-
-        <aside class="sidebar left-sidebar">
+        try {
+            const resposta = await fetch(apiUrl);
+            if (!resposta.ok) throw new Error('Falha na resposta da rede');
             
-            <h2>Índices Financeiros</h2>
-            <div class="tradingview-widget-container" style="margin-bottom: 25px;">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                  "colorTheme": "light",
-                  "dateRange": "1D",
-                  "showChart": false,
-                  "locale": "br",
-                  "width": "100%",
-                  "height": "260",
-                  "largeChartUrl": "",
-                  "isTransparent": true,
-                  "showSymbolLogo": true,
-                  "tabs": [
-                    {
-                      "title": "Brasil",
-                      "symbols": [
-                        { "s": "BMFBOVESPA:IBOV", "d": "Ibovespa" },
-                        { "s": "FX_IDC:USDBRL", "d": "Dólar (USD/BRL)" },
-                        { "s": "FX_IDC:EURBRL", "d": "Euro (EUR/BRL)" }
-                      ]
-                    },
-                    {
-                      "title": "Américas",
-                      "symbols": [
-                        { "s": "FOREXCOM:SPXUSD", "d": "S&P 500 (EUA)" },
-                        { "s": "FOREXCOM:NSXUSD", "d": "Nasdaq 100 (EUA)" },
-                        { "s": "FOREXCOM:DJI", "d": "Dow Jones (EUA)" }
-                      ]
-                    },
-                    {
-                      "title": "Europa",
-                      "symbols": [
-                        { "s": "XETR:DAX", "d": "DAX 40 (Alemanha)" },
-                        { "s": "INDEX:FTSE", "d": "FTSE 100 (Reino Unido)" },
-                        { "s": "INDEX:CAC40", "d": "CAC 40 (França)" }
-                      ]
-                    },
-                    {
-                      "title": "Ásia",
-                      "symbols": [
-                        { "s": "INDEX:NKY", "d": "Nikkei 225 (Japão)" },
-                        { "s": "HSI:HSI", "d": "Hang Seng (Hong Kong)" },
-                        { "s": "SSE:000001", "d": "Shanghai (China)" }
-                      ]
-                    }
-                  ]
-                }
-                </script>
-            </div>
+            const dados = await resposta.json();
+            
+            // Converte a string XML contida em dados.contents em documento DOM
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(dados.contents, "text/xml");
+            const itens = xmlDoc.querySelectorAll("item");
 
-            <h2>Últimas Notícias (Brasil)</h2>
-            <ul id="lista-noticias" class="noticias-lista">
-                <li>A carregar notícias...</li>
-            </ul>
+            const ul = document.getElementById('lista-noticias');
+            ul.innerHTML = ''; // Limpa mensagem de carregamento
 
-        </aside>
-
-        <main class="main-content">
-            <h2 class="section-title">Apresentação</h2>
-            <p>O mundo dos negócios é um ecossistema vivo, onde oportunidade, estruturação e confiança operam em sintonia. Nossa inteligência nasce de uma leitura estratégica e profunda do mercado.</p>
-        </main>
-
-        <aside class="sidebar right-sidebar">
-            <h2>Produtos Recomendados</h2>
-            <p style="font-size: 14px; color: #666;">Em breve: Banners e links de afiliados Shopee.</p>
-        </aside>
-
-    </div>
-
-    <footer class="footer-bar">
-        <p>&copy; ACAJ - Sociedade Limitada Unipessoal. Todos os direitos reservados.</p>
-        <p>Contato: contato@acaj.com.br</p>
-    </footer>
-
-    <!-- Script JavaScript para carregar o Google Notícias automaticamente -->
-    <script>
-        async function carregarGoogleNoticias() {
-            const feedUrl = encodeURIComponent('https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419');
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${feedUrl}`;
-
-            try {
-                const resposta = await fetch(apiUrl);
-                const dados = await resposta.json();
-
-                if (dados.status === 'ok') {
-                    const ul = document.getElementById('lista-noticias');
-                    ul.innerHTML = ''; // Limpa a mensagem de carregamento
-
-                    // Exibe as 5 primeiras notícias do feed
-                    dados.items.slice(0, 5).forEach(item => {
-                        const li = document.createElement('li');
-                        
-                        const link = document.createElement('a');
-                        link.href = item.link;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                        link.textContent = item.title;
-
-                        const data = document.createElement('span');
-                        data.className = 'noticia-data';
-                        data.textContent = new Date(item.pubDate).toLocaleDateString('pt-BR', {
-                            day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                        });
-
-                        li.appendChild(link);
-                        li.appendChild(data);
-                        ul.appendChild(li);
-                    });
-                } else {
-                    document.getElementById('lista-noticias').innerHTML = '<li>Não foi possível carregar as notícias.</li>';
-                }
-            } catch (erro) {
-                console.error("Erro ao carregar notícias:", erro);
-                document.getElementById('lista-noticias').innerHTML = '<li>Erro ao carregar notícias.</li>';
+            if (itens.length === 0) {
+                ul.innerHTML = '<li>Nenhuma notícia encontrada.</li>';
+                return;
             }
+
+            // Exibe as 5 primeiras notícias do feed RSS
+            Array.from(itens).slice(0, 5).forEach(item => {
+                const li = document.createElement('li');
+                
+                const link = document.createElement('a');
+                link.href = item.querySelector("link") ? item.querySelector("link").textContent : '#';
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = item.querySelector("title") ? item.querySelector("title").textContent : 'Sem título';
+
+                const pubDateText = item.querySelector("pubDate") ? item.querySelector("pubDate").textContent : null;
+                const data = document.createElement('span');
+                data.className = 'noticia-data';
+                
+                if (pubDateText) {
+                    const dataObj = new Date(pubDateText);
+                    data.textContent = dataObj.toLocaleDateString('pt-BR', {
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    });
+                }
+
+                li.appendChild(link);
+                li.appendChild(data);
+                ul.appendChild(li);
+            });
+
+        } catch (erro) {
+            console.error("Erro ao carregar notícias:", erro);
+            document.getElementById('lista-noticias').innerHTML = '<li>Erro ao carregar notícias.</li>';
         }
+    }
 
-        carregarGoogleNoticias();
-    </script>
-
-</body>
-</html>
+    carregarGoogleNoticias();
+</script>
