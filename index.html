@@ -91,38 +91,6 @@
             margin-bottom: 12px;
         }
 
-        .noticias-lista {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
-
-        .noticias-lista li {
-            margin-bottom: 10px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 6px;
-            font-size: 12px;
-            line-height: 1.4;
-        }
-
-        .noticias-lista a {
-            color: #1e293b;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 2px;
-            transition: color 0.2s ease;
-        }
-
-        .noticias-lista a:hover {
-            color: #d4af37;
-        }
-
-        .noticia-data {
-            font-size: 10px;
-            color: #64748b;
-        }
-
         .main-content {
             background-color: #ffffff;
             padding: 35px 30px;
@@ -144,7 +112,7 @@
         .main-content p {
             font-size: clamp(18px, 2.2vw, 21px);
             line-height: 1.6;
-            margin: 0;
+            margin: 0 0 15px 0;
             text-align: center;
         }
 
@@ -194,9 +162,8 @@
     <div class="page-container">
 
         <aside class="sidebar left-sidebar">
-            
             <h2>Índices Financeiros</h2>
-            <div class="tradingview-widget-container" style="margin-bottom: 25px;">
+            <div class="tradingview-widget-container" style="margin-bottom: 0;">
                 <div class="tradingview-widget-container__widget"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
                 {
@@ -205,7 +172,7 @@
                   "showChart": false,
                   "locale": "br",
                   "width": "100%",
-                  "height": "260",
+                  "height": "320",
                   "largeChartUrl": "",
                   "isTransparent": true,
                   "showSymbolLogo": true,
@@ -246,22 +213,6 @@
                 }
                 </script>
             </div>
-
-            <h2>Notícias - São Paulo</h2>
-            <ul id="lista-sp" class="noticias-lista">
-                <li>A carregar notícias...</li>
-            </ul>
-
-            <h2>Notícias - Brasil</h2>
-            <ul id="lista-brasil" class="noticias-lista">
-                <li>A carregar notícias...</li>
-            </ul>
-
-            <h2>Notícias - Mundo</h2>
-            <ul id="lista-mundo" class="noticias-lista">
-                <li>A carregar notícias...</li>
-            </ul>
-
         </aside>
 
         <main class="main-content">
@@ -281,58 +232,6 @@
         <p>&copy; ACAJ - Sociedade Limitada Unipessoal. Todos os direitos reservados.</p>
         <p>Contato: contato@acaj.com.br</p>
     </footer>
-
-    <script>
-        async function buscarFeedG1(urlFeed, elementId, limite = 3) {
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(urlFeed)}`;
-            try {
-                const resposta = await fetch(apiUrl);
-                const dados = await resposta.json();
-                const ul = document.getElementById(elementId);
-                ul.innerHTML = '';
-
-                if (dados.status === 'ok' && dados.items && dados.items.length > 0) {
-                    dados.items.slice(0, limite).forEach(item => {
-                        const li = document.createElement('li');
-                        
-                        const link = document.createElement('a');
-                        link.href = item.link;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                        link.textContent = item.title;
-
-                        const data = document.createElement('span');
-                        data.className = 'noticia-data';
-                        if (item.pubDate) {
-                            const dataObj = new Date(item.pubDate);
-                            data.textContent = dataObj.toLocaleDateString('pt-BR', {
-                                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                            });
-                        }
-
-                        li.appendChild(link);
-                        li.appendChild(data);
-                        ul.appendChild(li);
-                    });
-                } else {
-                    ul.innerHTML = '<li>Nenhuma notícia disponível.</li>';
-                }
-            } catch (erro) {
-                console.error("Erro ao carregar feed:", erro);
-                document.getElementById(elementId).innerHTML = '<li>Erro ao carregar notícias.</li>';
-            }
-        }
-
-        // URLs dos feeds RSS do G1
-        const feedSP = 'https://g1.globo.com/rss/g1/sao-paulo/';
-        const feedBrasil = 'https://g1.globo.com/rss/g1/brasil/';
-        const feedMundo = 'https://g1.globo.com/rss/g1/mundo/';
-
-        // Carrega 3 notícias de cada categoria
-        buscarFeedG1(feedSP, 'lista-sp', 3);
-        buscarFeedG1(feedBrasil, 'lista-brasil', 3);
-        buscarFeedG1(feedMundo, 'lista-mundo', 3);
-    </script>
 
 </body>
 </html>
