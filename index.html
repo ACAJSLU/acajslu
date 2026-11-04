@@ -49,18 +49,40 @@
         .nav-bar {
             width: 100%;
             background-color: #334155;
-            padding: 12px 30px;
+            padding: 0 30px;
             box-sizing: border-box;
             border-bottom: 1px solid #cbd5e1;
         }
 
-        .menu-placeholder {
+        /* --- ESTILOS DO MENU DE NAVEGAÇÃO (SEM SUBMENU) --- */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a {
             color: #e2e8f0;
+            text-decoration: none;
             font-size: 14px;
+            font-family: 'Cambria', Georgia, serif;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin: 0;
+            padding: 12px 20px;
+            display: block;
+            transition: 0.3s;
         }
+
+        .nav-item > a:hover, .nav-item:hover > a {
+            background-color: #1e293b;
+            color: #f1c40f;
+        }
+        /* ------------------------------------------------ */
 
         .page-container {
             display: grid;
@@ -145,6 +167,10 @@
             .logo {
                 width: 45px;
             }
+            
+            .nav-links {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -156,7 +182,12 @@
     </header>
 
     <nav class="nav-bar">
-        <p class="menu-placeholder">Área reservada ao menu</p>
+        <ul class="nav-links">
+            <!-- APENAS O MENU CAPTAÇÃO DIRETO (SEM SUBMENU) -->
+            <li class="nav-item">
+                <a href="captacao.html">Captação</a>
+            </li>
+        </ul>
     </nav>
 
     <div class="page-container">
