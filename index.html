@@ -56,7 +56,7 @@
             z-index: 100;
         }
 
-        /* --- ESTILOS DO MENU DE NAVEGAÇÃO E SUBMENU --- */
+        /* --- ESTILOS DO MENU DE NAVEGAÇÃO E SUBMENUS (NÍVEIS 1, 2 E 3) --- */
         .nav-links {
             display: flex;
             list-style: none;
@@ -98,7 +98,7 @@
             position: absolute;
             top: 100%;
             left: 0;
-            min-width: 210px;
+            min-width: 230px;
             list-style: none;
             margin: 0;
             padding: 6px 0;
@@ -110,28 +110,82 @@
             z-index: 200;
         }
 
-        .nav-item.has-dropdown:hover .dropdown-menu,
-        .nav-item.has-dropdown.open .dropdown-menu {
+        .nav-item.has-dropdown:hover > .dropdown-menu,
+        .nav-item.has-dropdown.open > .dropdown-menu {
             display: block;
         }
 
-        .dropdown-menu li a {
+        .dropdown-menu li,
+        .submenu li {
+            position: relative;
+        }
+
+        .dropdown-menu li a,
+        .submenu li a,
+        .sub-submenu li a {
             color: #e2e8f0;
             text-decoration: none;
             font-size: 13px;
             font-family: 'Cambria', Georgia, serif;
             letter-spacing: 0.5px;
             padding: 10px 18px;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             transition: 0.25s;
         }
 
-        .dropdown-menu li a:hover {
+        .dropdown-menu li > a:hover,
+        .dropdown-menu li.has-submenu:hover > a,
+        .dropdown-menu li.has-submenu.open > a {
             background-color: #334155;
             color: #f1c40f;
             padding-left: 22px;
         }
-        /* --------------------------------------------- */
+
+        .has-submenu > a::after {
+            content: " ▸";
+            font-size: 11px;
+            margin-left: 10px;
+        }
+
+        .submenu,
+        .sub-submenu {
+            display: none;
+            position: absolute;
+            top: -6px;
+            left: 100%;
+            min-width: 240px;
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+            background-color: #1e293b;
+            border: 1px solid #d4af37;
+            border-radius: 6px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            z-index: 300;
+        }
+
+        .sub-submenu {
+            z-index: 400;
+        }
+
+        .dropdown-menu li.has-submenu:hover > .submenu,
+        .dropdown-menu li.has-submenu.open > .submenu,
+        .submenu li.has-submenu:hover > .sub-submenu,
+        .submenu li.has-submenu.open > .sub-submenu {
+            display: block;
+        }
+
+        .submenu li > a:hover,
+        .submenu li.has-submenu:hover > a,
+        .submenu li.has-submenu.open > a,
+        .sub-submenu li > a:hover {
+            background-color: #334155;
+            color: #f1c40f;
+            padding-left: 22px;
+        }
+        /* -------------------------------------------------------------- */
 
         .page-container {
             display: grid;
@@ -221,7 +275,9 @@
                 flex-direction: column;
             }
 
-            .dropdown-menu {
+            .dropdown-menu,
+            .submenu,
+            .sub-submenu {
                 position: static;
                 width: 100%;
                 box-sizing: border-box;
@@ -229,6 +285,9 @@
                 border-top: 1px solid #475569;
                 border-radius: 0;
                 box-shadow: none;
+            }
+
+            .dropdown-menu {
                 background-color: #273549;
             }
 
@@ -236,8 +295,40 @@
                 padding-left: 32px;
             }
 
-            .dropdown-menu li a:hover {
+            .dropdown-menu li > a:hover,
+            .dropdown-menu li.has-submenu:hover > a,
+            .dropdown-menu li.has-submenu.open > a {
                 padding-left: 36px;
+            }
+
+            .submenu {
+                background-color: #192332;
+            }
+
+            .submenu li a {
+                padding-left: 48px;
+            }
+
+            .submenu li > a:hover,
+            .submenu li.has-submenu:hover > a,
+            .submenu li.has-submenu.open > a {
+                padding-left: 52px;
+            }
+
+            .sub-submenu {
+                background-color: #111827;
+            }
+
+            .sub-submenu li a {
+                padding-left: 64px;
+            }
+
+            .sub-submenu li > a:hover {
+                padding-left: 68px;
+            }
+
+            .has-submenu > a::after {
+                content: " ▾";
             }
         }
     </style>
@@ -260,7 +351,29 @@
             <li class="nav-item has-dropdown">
                 <a href="#marketplace" aria-expanded="false">Marketplace</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" target="_blank" rel="noopener noreferrer">Shopee</a></li>
+                    <!-- SUBMENU SHOPEE -->
+                    <li class="has-submenu">
+                        <a href="#shopee" aria-expanded="false">Shopee</a>
+                        <ul class="submenu">
+                            <!-- CATEGORIA CASA E ORGANIZAÇÃO COM SUBMENU POR CLASSE -->
+                            <li class="has-submenu">
+                                <a href="#shopee-casa-organizacao" aria-expanded="false">Casa e Organização</a>
+                                <ul class="sub-submenu">
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Cozinha e Despensa</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Banheiro e Lavanderia</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Closet e Quartos</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Sala e Escritório</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- DEMAIS CATEGORIAS SHOPEE -->
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Eletrônicos e Acessórios</a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Saúde e Bem-Estar</a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Livros e Papelaria</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- OUTROS MARKETPLACES -->
                     <li><a href="#" target="_blank" rel="noopener noreferrer">Amazon</a></li>
                     <li><a href="#" target="_blank" rel="noopener noreferrer">Mercado Livre</a></li>
                     <li><a href="#" target="_blank" rel="noopener noreferrer">Magazine Luiza</a></li>
@@ -355,9 +468,22 @@
             });
         });
 
+        document.querySelectorAll('.has-submenu > a').forEach(function (trigger) {
+            trigger.addEventListener('click', function (event) {
+                const href = this.getAttribute('href');
+                if (window.innerWidth <= 900 || !href || href.startsWith('#')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.toggle('open');
+                    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
+            });
+        });
+
         document.addEventListener('click', function (event) {
             if (!event.target.closest('.nav-item.has-dropdown')) {
-                document.querySelectorAll('.nav-item.has-dropdown.open').forEach(function (item) {
+                document.querySelectorAll('.nav-item.has-dropdown.open, .has-submenu.open').forEach(function (item) {
                     item.classList.remove('open');
                     const link = item.querySelector('a');
                     if (link) link.setAttribute('aria-expanded', 'false');
