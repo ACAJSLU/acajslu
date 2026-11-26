@@ -52,9 +52,11 @@
             padding: 0 30px;
             box-sizing: border-box;
             border-bottom: 1px solid #cbd5e1;
+            position: relative;
+            z-index: 100;
         }
 
-        /* --- ESTILOS DO MENU DE NAVEGAÇÃO (SEM SUBMENU) --- */
+        /* --- ESTILOS DO MENU DE NAVEGAÇÃO E SUBMENU --- */
         .nav-links {
             display: flex;
             list-style: none;
@@ -78,11 +80,58 @@
             transition: 0.3s;
         }
 
-        .nav-item > a:hover, .nav-item:hover > a {
+        .nav-item > a:hover,
+        .nav-item:hover > a,
+        .nav-item.has-dropdown.open > a {
             background-color: #1e293b;
             color: #f1c40f;
         }
-        /* ------------------------------------------------ */
+
+        .has-dropdown > a::after {
+            content: " ▾";
+            font-size: 11px;
+            vertical-align: middle;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 210px;
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+            background-color: #1e293b;
+            border: 1px solid #d4af37;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            z-index: 200;
+        }
+
+        .nav-item.has-dropdown:hover .dropdown-menu,
+        .nav-item.has-dropdown.open .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: 'Cambria', Georgia, serif;
+            letter-spacing: 0.5px;
+            padding: 10px 18px;
+            display: block;
+            transition: 0.25s;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #334155;
+            color: #f1c40f;
+            padding-left: 22px;
+        }
+        /* --------------------------------------------- */
 
         .page-container {
             display: grid;
@@ -167,9 +216,28 @@
             .logo {
                 width: 45px;
             }
-            
+
             .nav-links {
                 flex-direction: column;
+            }
+
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-sizing: border-box;
+                border: none;
+                border-top: 1px solid #475569;
+                border-radius: 0;
+                box-shadow: none;
+                background-color: #273549;
+            }
+
+            .dropdown-menu li a {
+                padding-left: 32px;
+            }
+
+            .dropdown-menu li a:hover {
+                padding-left: 36px;
             }
         }
     </style>
@@ -181,11 +249,22 @@
         <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
     </header>
 
-    <nav class="nav-bar">
+    <nav class="nav-bar" aria-label="Menu principal">
         <ul class="nav-links">
             <!-- MENU YAKULT COM ATRIBUTO PARA ABRIR EM OUTRA ABA -->
             <li class="nav-item">
                 <a href="$$$$$" target="_blank" rel="noopener noreferrer">Yakult</a>
+            </li>
+
+            <!-- MENU MARKETPLACE COM SUBMENUS -->
+            <li class="nav-item has-dropdown">
+                <a href="#marketplace" aria-expanded="false">Marketplace</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Shopee</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Amazon</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Mercado Livre</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Magazine Luiza</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
@@ -263,6 +342,29 @@
         <p>&copy; ACAJ - Sociedade Limitada Unipessoal. Todos os direitos reservados.</p>
         <p>Contato: contato@acaj.com.br</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function (trigger) {
+            trigger.addEventListener('click', function (event) {
+                if (window.innerWidth <= 900 || this.getAttribute('href') === '#marketplace') {
+                    event.preventDefault();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.toggle('open');
+                    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
+            });
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.nav-item.has-dropdown')) {
+                document.querySelectorAll('.nav-item.has-dropdown.open').forEach(function (item) {
+                    item.classList.remove('open');
+                    const link = item.querySelector('a');
+                    if (link) link.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
