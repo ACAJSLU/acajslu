@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee - ACAJ SLU</title>
+    <style>
+        body {
+            background-color: #f4f4f6;
+            font-family: 'Cambria', Georgia, serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            width: 100%;
+            background-color: #1e293b;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-sizing: border-box;
+            border-bottom: 3px solid #d4af37;
+        }
+
+        .logo {
+            width: 60px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            color: #ffffff;
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: normal;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .brand-title span {
+            color: #f1c40f;
+        }
+
+        .nav-bar {
+            width: 100%;
+            background-color: #334155;
+            padding: 0 30px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #cbd5e1;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* --- ESTILOS DO MENU DE NAVEGAÇÃO E SUBMENUS (NÍVEIS 1, 2 E 3) --- */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'Cambria', Georgia, serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .nav-item > a:hover,
+        .nav-item:hover > a,
+        .nav-item.has-dropdown.open > a,
+        .nav-item > a.active {
+            background-color: #1e293b;
+            color: #f1c40f;
+        }
+
+        .has-dropdown > a::after {
+            content: " ▾";
+            font-size: 11px;
+            vertical-align: middle;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 230px;
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+            background-color: #1e293b;
+            border: 1px solid #d4af37;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            z-index: 200;
+        }
+
+        .nav-item.has-dropdown:hover > .dropdown-menu,
+        .nav-item.has-dropdown.open > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li,
+        .submenu li {
+            position: relative;
+        }
+
+        .dropdown-menu li a,
+        .submenu li a,
+        .sub-submenu li a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: 'Cambria', Georgia, serif;
+            letter-spacing: 0.5px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.25s;
+        }
+
+        .dropdown-menu li > a:hover,
+        .dropdown-menu li.has-submenu:hover > a,
+        .dropdown-menu li.has-submenu.open > a {
+            background-color: #334155;
+            color: #f1c40f;
+            padding-left: 22px;
+        }
+
+        .has-submenu > a::after {
+            content: " ▸";
+            font-size: 11px;
+            margin-left: 10px;
+        }
+
+        .submenu,
+        .sub-submenu {
+            display: none;
+            position: absolute;
+            top: -6px;
+            left: 100%;
+            min-width: 240px;
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+            background-color: #1e293b;
+            border: 1px solid #d4af37;
+            border-radius: 6px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            z-index: 300;
+        }
+
+        .sub-submenu {
+            z-index: 400;
+        }
+
+        .dropdown-menu li.has-submenu:hover > .submenu,
+        .dropdown-menu li.has-submenu.open > .submenu,
+        .submenu li.has-submenu:hover > .sub-submenu,
+        .submenu li.has-submenu.open > .sub-submenu {
+            display: block;
+        }
+
+        .submenu li > a:hover,
+        .submenu li.has-submenu:hover > a,
+        .submenu li.has-submenu.open > a,
+        .sub-submenu li > a:hover {
+            background-color: #334155;
+            color: #f1c40f;
+            padding-left: 22px;
+        }
+        /* -------------------------------------------------------------- */
+
+        .page-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 220px;
+            gap: 20px;
+            max-width: 1300px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        .sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .sidebar h2 {
+            font-size: 16px;
+            color: #1e293b;
+            margin-top: 0;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        .main-content {
+            background-color: #ffffff;
+            padding: 35px 30px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title-wrap {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        .main-content h2.section-title {
+            font-size: 24px;
+            color: #1e293b;
+            margin: 0;
+            padding-bottom: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .main-content h2.section-title::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #d4af37;
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+
+        .main-content h3.sub-heading {
+            font-size: 19px;
+            color: #1e293b;
+            margin: 24px 0 10px 0;
+            border-left: 3px solid #d4af37;
+            padding-left: 10px;
+        }
+
+        .main-content p {
+            font-size: 17px;
+            line-height: 1.65;
+            margin: 0 0 15px 0;
+            text-align: justify;
+        }
+
+        .policy-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #d4af37;
+            padding: 18px 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .policy-list {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .policy-list li {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .nav-actions {
+            margin-top: 26px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background-color: #1e293b;
+            color: #f1c40f;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: 0.25s;
+        }
+
+        .action-btn:hover {
+            background-color: #334155;
+        }
+
+        .footer-bar {
+            width: 100%;
+            background-color: #1e293b;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: auto;
+            border-top: 3px solid #d4af37;
+            font-size: 14px;
+        }
+
+        .footer-bar p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar, .nav-bar {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                width: 45px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .dropdown-menu,
+            .submenu,
+            .sub-submenu {
+                position: static;
+                width: 100%;
+                box-sizing: border-box;
+                border: none;
+                border-top: 1px solid #475569;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .dropdown-menu {
+                background-color: #273549;
+            }
+
+            .dropdown-menu li a {
+                padding-left: 32px;
+            }
+
+            .dropdown-menu li > a:hover,
+            .dropdown-menu li.has-submenu:hover > a,
+            .dropdown-menu li.has-submenu.open > a {
+                padding-left: 36px;
+            }
+
+            .submenu {
+                background-color: #192332;
+            }
+
+            .submenu li a {
+                padding-left: 48px;
+            }
+
+            .submenu li > a:hover,
+            .submenu li.has-submenu:hover > a,
+            .submenu li.has-submenu.open > a {
+                padding-left: 52px;
+            }
+
+            .sub-submenu {
+                background-color: #111827;
+            }
+
+            .sub-submenu li a {
+                padding-left: 64px;
+            }
+
+            .sub-submenu li > a:hover {
+                padding-left: 68px;
+            }
+
+            .has-submenu > a::after {
+                content: " ▾";
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <img src="Logotipo - ACAJ.png" alt="Logotipo ACAJ SLU" class="logo">
+        <h1 class="brand-title">ACAJ - <span>Sociedade Limitada Unipessoal</span></h1>
+    </header>
+
+    <nav class="nav-bar" aria-label="Menu principal">
+        <ul class="nav-links">
+            <li class="nav-item">
+                <a href="index.html">Início</a>
+            </li>
+
+            <!-- MENU YAKULT COM ATRIBUTO PARA ABRIR EM OUTRA ABA -->
+            <li class="nav-item">
+                <a href="$$$$$" target="_blank" rel="noopener noreferrer">Yakult</a>
+            </li>
+
+            <!-- MENU MARKETPLACE COM SUBMENUS -->
+            <li class="nav-item has-dropdown">
+                <a href="marketplace.html" aria-expanded="false">Marketplace</a>
+                <ul class="dropdown-menu">
+                    <!-- SUBMENU SHOPEE -->
+                    <li class="has-submenu">
+                        <a href="shopee.html" class="active" aria-expanded="false">Shopee</a>
+                        <ul class="submenu">
+                            <!-- CATEGORIA CASA E ORGANIZAÇÃO COM SUBMENU POR CLASSE -->
+                            <li class="has-submenu">
+                                <a href="#shopee-casa-organizacao" aria-expanded="false">Casa e Organização</a>
+                                <ul class="sub-submenu">
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Cozinha e Despensa</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Banheiro e Lavanderia</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Closet e Quartos</a></li>
+                                    <li><a href="#" target="_blank" rel="noopener noreferrer">Sala e Escritório</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- DEMAIS CATEGORIAS SHOPEE -->
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Eletrônicos e Acessórios</a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Saúde e Bem-Estar</a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer">Livros e Papelaria</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- OUTROS MARKETPLACES -->
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Amazon</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Mercado Livre</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Magazine Luiza</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+
+        <aside class="sidebar left-sidebar">
+            <h2>Índices Financeiros</h2>
+            <div class="tradingview-widget-container" style="margin-bottom: 0;">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                  "colorTheme": "light",
+                  "dateRange": "1D",
+                  "showChart": false,
+                  "locale": "br",
+                  "width": "100%",
+                  "height": "320",
+                  "largeChartUrl": "",
+                  "isTransparent": true,
+                  "showSymbolLogo": true,
+                  "tabs": [
+                    {
+                      "title": "Brasil",
+                      "symbols": [
+                        { "s": "BMFBOVESPA:IBOV", "d": "Ibovespa" },
+                        { "s": "FX_IDC:USDBRL", "d": "Dólar (USD/BRL)" },
+                        { "s": "FX_IDC:EURBRL", "d": "Euro (EUR/BRL)" }
+                      ]
+                    },
+                    {
+                      "title": "Américas",
+                      "symbols": [
+                        { "s": "FOREXCOM:SPXUSD", "d": "S&P 500 (EUA)" },
+                        { "s": "FOREXCOM:NSXUSD", "d": "Nasdaq 100 (EUA)" },
+                        { "s": "FOREXCOM:DJI", "d": "Dow Jones (EUA)" }
+                      ]
+                    },
+                    {
+                      "title": "Europa",
+                      "symbols": [
+                        { "s": "XETR:DAX", "d": "DAX 40 (Alemanha)" },
+                        { "s": "INDEX:FTSE", "d": "FTSE 100 (Reino Unido)" },
+                        { "s": "INDEX:CAC40", "d": "CAC 40 (França)" }
+                      ]
+                    },
+                    {
+                      "title": "Ásia",
+                      "symbols": [
+                        { "s": "INDEX:NKY", "d": "Nikkei 225 (Japão)" },
+                        { "s": "HSI:HSI", "d": "Hang Seng (Hong Kong)" },
+                        { "s": "SSE:000001", "d": "Shanghai (China)" }
+                      ]
+                    }
+                  ]
+                }
+                </script>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="section-title-wrap">
+                <h2 class="section-title">Shopee — Curadoria e Afiliados</h2>
+            </div>
+
+            <p>A <strong>Shopee</strong> é um dos principais marketplaces do comércio eletrônico, reunindo grande variedade de produtos, ofertas frequentes e facilidade de compra para o dia a dia. Dentro do portal da <strong>ACAJ - Sociedade Limitada Unipessoal</strong>, este espaço organiza indicações de produtos selecionados com critério para ajudar você a encontrar soluções práticas com mais agilidade.</p>
+
+            <h3 class="sub-heading">Nosso Trabalho como Afiliado</h3>
+            <p>Como afiliados da <strong>Shopee</strong>, atuamos na pesquisa, seleção e organização de itens úteis, dividindo o catálogo por categorias e classes de produtos. Em vez de exibir recomendações aleatórias, buscamos reunir opções alinhadas às necessidades reais de quem visita o portal, facilitando a comparação e o acesso direto à loja oficial do produto.</p>
+
+            <div class="policy-box">
+                <h3 class="sub-heading" style="margin-top: 0;">Política de Afiliados e Transparência</h3>
+                <ul class="policy-list">
+                    <li><strong>Comissionamento sem custo extra:</strong> Os links de produtos disponibilizados podem ser links de afiliados. Ao concluir uma compra por meio deles, a ACAJ pode receber uma comissão paga pela plataforma, sem nenhum acréscimo no valor pago pelo comprador.</li>
+                    <li><strong>Condições da plataforma:</strong> Preços, cupons, disponibilidade em estoque, prazos de entrega, trocas e políticas de atendimento são de responsabilidade exclusiva da Shopee e dos respectivos vendedores no momento da compra.</li>
+                    <li><strong>Boas práticas e integridade:</strong> Nossa curadoria preza pela clareza e pela honestidade na apresentação dos itens, sem promessas enganosas ou uso indevido de marcas, respeitando as diretrizes do programa de afiliados e o compromisso institucional da ACAJ.</li>
+                </ul>
+            </div>
+
+            <div class="nav-actions">
+                <a href="marketplace.html" class="action-btn">← Voltar para Marketplace</a>
+                <a href="index.html" class="action-btn">Ir para Principal</a>
+            </div>
+        </main>
+
+        <aside class="sidebar right-sidebar">
+            <h2>Produtos Recomendados</h2>
+            <p style="font-size: 14px; color: #666;">Em breve: Banners e links de afiliados Shopee.</p>
+        </aside>
+
+    </div>
+
+    <footer class="footer-bar">
+        <p>&copy; ACAJ - Sociedade Limitada Unipessoal. Todos os direitos reservados.</p>
+        <p>Contato: acajslu@gmail.com</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function (trigger) {
+            trigger.addEventListener('click', function (event) {
+                const href = this.getAttribute('href');
+                if (window.innerWidth <= 900 && (!href || href.startsWith('#'))) {
+                    event.preventDefault();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.toggle('open');
+                    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
+            });
+        });
+
+        document.querySelectorAll('.has-submenu > a').forEach(function (trigger) {
+            trigger.addEventListener('click', function (event) {
+                const href = this.getAttribute('href');
+                if (window.innerWidth <= 900 && (!href || href.startsWith('#'))) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.toggle('open');
+                    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
+            });
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.nav-item.has-dropdown')) {
+                document.querySelectorAll('.nav-item.has-dropdown.open, .has-submenu.open').forEach(function (item) {
+                    item.classList.remove('open');
+                    const link = item.querySelector('a');
+                    if (link) link.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
