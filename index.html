@@ -82,7 +82,8 @@
 
         .nav-item > a:hover,
         .nav-item:hover > a,
-        .nav-item.has-dropdown.open > a {
+        .nav-item.has-dropdown.open > a,
+        .nav-item > a.active {
             background-color: #1e293b;
             color: #f1c40f;
         }
@@ -342,12 +343,16 @@
 
     <nav class="nav-bar" aria-label="Menu principal">
         <ul class="nav-links">
+            <li class="nav-item">
+                <a href="index.html" class="active">Início</a>
+            </li>
+
             <!-- MENU YAKULT COM ATRIBUTO PARA ABRIR EM OUTRA ABA -->
             <li class="nav-item">
                 <a href="$$$$$" target="_blank" rel="noopener noreferrer">Yakult</a>
             </li>
 
-<!-- MENU MARKETPLACE COM SUBMENUS -->
+            <!-- MENU MARKETPLACE COM SUBMENUS -->
             <li class="nav-item has-dropdown">
                 <a href="marketplace.html" aria-expanded="false">Marketplace</a>
                 <ul class="dropdown-menu">
@@ -459,7 +464,8 @@
     <script>
         document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function (trigger) {
             trigger.addEventListener('click', function (event) {
-                if (window.innerWidth <= 900 || this.getAttribute('href') === '#marketplace') {
+                const href = this.getAttribute('href');
+                if (window.innerWidth <= 900 && (!href || href.startsWith('#'))) {
                     event.preventDefault();
                     const parent = this.parentElement;
                     const isOpen = parent.classList.toggle('open');
