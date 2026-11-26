@@ -225,14 +225,29 @@
             border: 1px solid #e2e8f0;
         }
 
+        .section-title-wrap {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
         .main-content h2.section-title {
             font-size: 24px;
             color: #1e293b;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
+            margin: 0;
+            padding-bottom: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .main-content h2.section-title::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #d4af37;
+            margin-top: 8px;
+            border-radius: 2px;
         }
 
         .main-content p {
@@ -444,9 +459,13 @@
         </aside>
 
         <main class="main-content">
-            <h2 class="section-title">Apresentação</h2>
-            <p>A análise de diversas perspectivas, compreende a complexidade das interações humanas. Neste portal, a ACAJ integra as diferentes áreas do conhecimento existente em Sabedoria Plena.</p>
-            <p>Bem-Vindos(as) a Integração da Ciência!</p>
+            <div class="section-title-wrap">
+                <h2 class="section-title">Apresentação</h2>
+            </div>
+            <br>
+            <p>A <strong>ACAJ - Sociedade Limitada Unipessoal</strong> inicia sua atividade econômica exercendo parcerias sólidas e de confiança, visando a evolução da circulação de bens e de serviços.</p>
+            <p>Comprometida com a seriedade, a transparência e a curadoria criteriosa, a ACAJ atua como uma ponte estratégica entre soluções de qualidade e as necessidades reais do dia a dia, reunindo conhecimento, organização e boas oportunidades em um só lugar.</p>
+            <p>Seja bem-vindo(a) ao nosso portal!</p>
         </main>
 
         <aside class="sidebar right-sidebar">
